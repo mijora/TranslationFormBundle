@@ -2,11 +2,10 @@
 
 namespace A2lix\TranslationFormBundle\EventListener;
 
-use Doctrine\Common\Annotations\Reader,
-    Gedmo\Translatable\TranslatableListener,
-    Symfony\Component\HttpKernel\Event\FilterControllerEvent,
-    Doctrine\Common\Util\ClassUtils;
-
+use Doctrine\Common\Annotations\Reader;
+use Gedmo\Translatable\TranslatableListener;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Doctrine\Common\Util\ClassUtils;
 use Symfony\Component\HttpKernel\Controller\ErrorController;
 use Nelmio\ApiDocBundle\Controller\SwaggerUiController;
 
@@ -21,15 +20,17 @@ class ControllerListener
         $this->translatableListener = $translatableListener;
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         $controller = $event->getController();
-        
-        $controller = $event->getController();
-        if (is_object($controller) && (get_class($controller) == ErrorController::class || get_class($controller) == SwaggerUiController::class)){
-            return false;
+
+        if (is_object($controller)) {
+            $controllerClass = get_class($controller);
+            if ($controllerClass == ErrorController::class || $controllerClass == SwaggerUiController::class) {
+                return false;
+            }
         }
-        
+
         list($object, $method) = $controller;
 
         $className = ClassUtils::getClass($object);
