@@ -2,8 +2,8 @@
 
 namespace A2lix\TranslationFormBundle\TranslationForm;
 
-use Symfony\Component\Form\FormRegistry,
-    Doctrine\Common\Persistence\ManagerRegistry;
+use Symfony\Component\Form\FormRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @author David ALLIX
@@ -16,7 +16,7 @@ abstract class TranslationForm implements TranslationFormInterface
     /**
      *
      * @param \Symfony\Component\Form\FormRegistry $formRegistry
-     * @param \Doctrine\Common\Persistence\ManagerRegistry $managerRegistry
+     * @param \Doctrine\Persistence\ManagerRegistry $managerRegistry
      */
     public function __construct(FormRegistry $formRegistry, ManagerRegistry $managerRegistry)
     {
